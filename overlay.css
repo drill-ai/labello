@@ -1,0 +1,131 @@
+#labello-overlay {
+  /* design tokens, scoped to the overlay so they don't leak onto the page */
+  --bg: #000;
+  --fg: #fff;
+  --border: 1px solid var(--fg);
+  --mono: "SF Mono", Menlo, Consolas, "Courier New", monospace;
+  --tracking: 0.08em;
+  --pad: 10px;
+
+  position: fixed;
+  top: 70px;
+  right: 16px;
+  z-index: 2147483647;
+  width: 240px;
+  background: var(--bg);
+  color: var(--fg);
+  border: var(--border);
+  font-family: var(--mono);
+  font-size: 12px;
+  overflow: hidden;
+  user-select: none;
+}
+
+#labello-overlay .labello-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px var(--pad);
+  border-bottom: var(--border);
+  cursor: grab;
+  touch-action: none; /* let pointer drag work without the page scrolling */
+}
+
+#labello-overlay.labello-collapsed .labello-header {
+  border-bottom: none;
+}
+
+#labello-overlay.labello-dragging .labello-header {
+  cursor: grabbing;
+}
+
+#labello-overlay .labello-logo {
+  height: 16px;
+  width: auto;
+  display: block;
+}
+
+#labello-overlay .labello-name {
+  font-weight: 700;
+  letter-spacing: var(--tracking);
+  text-transform: uppercase;
+  flex: 1;
+}
+
+#labello-overlay .labello-caret {
+  color: var(--fg);
+  font-size: 12px;
+  line-height: 1;
+}
+
+#labello-overlay .labello-close {
+  background: none;
+  border: none;
+  color: var(--fg);
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1;
+  padding: 0 0 0 2px;
+  cursor: pointer;
+}
+
+#labello-overlay .labello-body {
+  padding: var(--pad);
+}
+
+#labello-overlay.labello-collapsed .labello-body {
+  display: none;
+}
+
+#labello-overlay .labello-title {
+  margin-bottom: var(--pad);
+  max-height: 3.2em;
+  overflow: hidden;
+  line-height: 1.6;
+  color: var(--fg);
+}
+
+#labello-overlay .labello-buttons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: var(--pad);
+}
+
+#labello-overlay .labello-buttons button {
+  flex: 1;
+  padding: 8px 0;
+  border: var(--border);
+  border-radius: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: inherit;
+  font-weight: 700;
+  letter-spacing: var(--tracking);
+  cursor: pointer;
+}
+
+#labello-overlay .labello-bad.labello-active,
+#labello-overlay .labello-good.labello-active {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+#labello-overlay .labello-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#labello-overlay .labello-count {
+  color: var(--fg);
+}
+
+#labello-overlay .labello-export {
+  background: var(--bg);
+  border: var(--border);
+  border-radius: 0;
+  color: var(--fg);
+  font-family: inherit;
+  padding: 5px var(--pad);
+  cursor: pointer;
+}

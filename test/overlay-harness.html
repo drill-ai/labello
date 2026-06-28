@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Labello overlay harness</title>
+    <link rel="stylesheet" href="../overlay.css" />
+    <style>
+      body { background: #fff; height: 100vh; margin: 0; font-family: Arial; }
+      #log { padding: 16px; }
+    </style>
+  </head>
+  <body>
+    <div id="log">Drag the header to move; click it to collapse/expand; actions print here:</div>
+    <script src="../src/overlay.js"></script>
+    <script>
+      const log = document.getElementById('log');
+      const overlay = createOverlay({
+        logoUrl: '../logo.svg',
+        onLabel: (v) => {
+          log.textContent = 'onLabel(' + v + ')';
+          overlay.render({ title: 'Demo Track — Some Artist', label: v, count: v === 1 ? 43 : 42 });
+        },
+        onExport: () => { log.textContent = 'onExport()'; },
+        onMove: ({ x, y }) => { log.textContent = 'onMove(' + Math.round(x) + ', ' + Math.round(y) + ')'; },
+        onToggle: (collapsed) => { log.textContent = 'onToggle(collapsed=' + collapsed + ')'; },
+        onClose: () => { log.textContent = 'onClose() — hidden; reload to bring it back'; overlay.setVisible(false); },
+      });
+      document.body.appendChild(overlay.el);
+      overlay.render({ title: 'Demo Track — Some Artist', label: null, count: 42 });
+    </script>
+  </body>
+</html>
