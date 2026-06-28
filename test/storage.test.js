@@ -13,11 +13,14 @@ global.chrome = {
       async set(obj) {
         Object.assign(store, obj);
       },
+      async remove(key) {
+        delete store[key];
+      },
     },
   },
 };
 
-const { getAllLabels, setLabel, countLabels, getUiState, setUiState } = require('../src/storage.js');
+const { getAllLabels, setLabel, removeLabel, countLabels, getUiState, setUiState } = require('../src/storage.js');
 
 beforeEach(() => {
   store = {};
@@ -31,6 +34,17 @@ test('setLabel on an existing id overwrites the entry', async () => {
   await setLabel('abc', { url: 'u', title: 't', label: 1 });
   await setLabel('abc', { url: 'u', title: 't', label: 0 });
   assert.deepStrictEqual(await getAllLabels(), { abc: { url: 'u', title: 't', label: 0 } });
+});
+test('removeLabel deletes an entry', async () => {
+  await setLabel('a', { url: 'u', title: 't', label: 1 });
+  await setLabel('b', { url: 'u', title: 't', label: 0 });
+  await removeLabel('a');
+  assert.deepStrictEqual(await getAllLabels(), { b: { url: 'u', title: 't', label: 0 } });
+});
+test('removeLabel on a missing id is a no-op', async () => {
+  await setLabel('a', { url: 'u', title: 't', label: 1 });
+  await removeLabel('nope');
+  assert.deepStrictEqual(await getAllLabels(), { a: { url: 'u', title: 't', label: 1 } });
 });
 test('countLabels returns the number of stored entries', async () => {
   assert.strictEqual(await countLabels(), 0);

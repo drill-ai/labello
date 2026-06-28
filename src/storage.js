@@ -13,6 +13,10 @@ async function setLabel(videoId, entry) {
   await chrome.storage.local.set({ [videoId]: entry });
 }
 
+async function removeLabel(videoId) {
+  await chrome.storage.local.remove(videoId);
+}
+
 async function countLabels() {
   const all = await getAllLabels();
   return Object.keys(all).length;
@@ -28,5 +32,5 @@ async function setUiState(state) {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { getAllLabels, setLabel, countLabels, getUiState, setUiState, UI_KEY };
+  module.exports = { getAllLabels, setLabel, removeLabel, countLabels, getUiState, setUiState, UI_KEY };
 }

@@ -62,11 +62,17 @@
   async function handleLabel(value) {
     const id = getVideoId(location.href);
     if (!id) return;
-    await setLabel(id, {
-      url: `https://www.youtube.com/watch?v=${id}`,
-      title: cleanTitle(document.title),
-      label: value,
-    });
+    const all = await getAllLabels();
+    if (all[id] && all[id].label === value) {
+      // clicking the already-active label clears it
+      await removeLabel(id);
+    } else {
+      await setLabel(id, {
+        url: `https://www.youtube.com/watch?v=${id}`,
+        title: cleanTitle(document.title),
+        label: value,
+      });
+    }
     await refresh();
   }
 
