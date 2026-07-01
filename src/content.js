@@ -53,9 +53,10 @@
     const id = getVideoId(location.href);
     const entry = id ? all[id] : null;
     overlay.render({
-      title: cleanTitle(document.title),
+      title: id ? cleanTitle(document.title) : null,
       label: entry ? entry.label : null,
       count: Object.keys(all).length,
+      onTrack: !!id,
     });
   }
 

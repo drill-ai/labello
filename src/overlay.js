@@ -113,10 +113,14 @@ function createOverlay({ logoUrl, onLabel, onExport, onMove, onToggle, onClose }
     }
   });
 
-  function render({ title, label, count }) {
+  function render({ title, label, count, onTrack }) {
+    // Buttons only work on an actual track; elsewhere on YouTube they grey out.
+    const enabled = onTrack !== false;
     titleEl.textContent = title || '(no track)';
-    badBtn.classList.toggle('labello-active', label === 0);
-    goodBtn.classList.toggle('labello-active', label === 1);
+    badBtn.disabled = !enabled;
+    goodBtn.disabled = !enabled;
+    badBtn.classList.toggle('labello-active', enabled && label === 0);
+    goodBtn.classList.toggle('labello-active', enabled && label === 1);
     countEl.textContent = `${count} labeled`;
   }
 
